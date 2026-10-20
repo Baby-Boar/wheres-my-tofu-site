@@ -53,6 +53,9 @@ body {
   background: var(--navy);
   color: var(--kami);
   font: 500 17px/1.55 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
   overflow-x: hidden;
 }
 img { max-width: 100%; display: block; }
@@ -302,8 +305,15 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
   background: var(--sumi); border-bottom: 4px solid var(--shu);
 }
+/* Heavy italic caps at 15-18px alias on 1x screens; a faint same-colour halo softens the edges. */
 .topbar-in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 8px; }
-.brand { font: italic 800 18px/1 var(--f-narrow); letter-spacing: .08em; color: var(--kami); text-decoration: none; }
+/* Heavy italic caps at 15-18px alias on 1x screens: a lighter cut plus a thin same-colour
+   stroke and halo fill in the stair-stepped edges of the slanted strokes. */
+.topbar-in :is(.brand, .np) {
+  -webkit-text-stroke: .3px currentColor;
+  text-shadow: 0 0 1px color-mix(in srgb, currentColor 55%, transparent);
+}
+.brand { font: italic 700 18px/1 var(--f-narrow); letter-spacing: .08em; color: var(--kami); text-decoration: none; }
 .tape {
   display: flex; align-items: center; gap: 14px; background: none; border: 0; padding: 0; cursor: pointer;
   color: var(--kami); text-align: right; font: inherit;
