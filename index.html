@@ -16,8 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,600;0,800;1,700;1,800&family=Barlow:wght@500;600&family=Dela+Gothic+One&family=Shippori+Mincho+B1:wght@800&display=swap">
 <style>
-/* Layout: one downhill run. Tilted red/ink slabs over the live world, a delivery slip for the
-   features, road signs for the modes, a wall calendar for the career, a stop sign to wishlist.
+/* Layout: one downhill run. Tilted red/ink slabs over the live world, screenshots taped on,
+   road signs for the modes, a wall calendar for the career, a stop sign to wishlist.
    Palette and type are the game's own HANKO RUSH system (docs/ui_proposal.md). */
 :root {
   --sumi: #120e1e;      /* SUMI ink: outlines, slabs, text on paper */
@@ -48,6 +48,8 @@
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  -webkit-user-select: none;
+  user-select: none;
   background: var(--navy);
   color: var(--kami);
   font: 500 17px/1.55 var(--f-body);
@@ -169,7 +171,13 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
   background: var(--kami); padding: 10px;
   clip-path: polygon(2% 0, 100% 2%, 98% 100%, 0 97%);
 }
-.shot-frame img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.shot-frame img, .shot-frame video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; background: var(--sumi); }
+.clip-cap {
+  position: absolute; right: 22px; top: -14px; z-index: 2; display: inline-flex; align-items: baseline; gap: 8px;
+  background: var(--hazard); color: var(--sumi); padding: 7px 12px 6px; transform: rotate(-3deg);
+  font: 800 14px/1 var(--f-narrow); letter-spacing: .12em; text-transform: uppercase; box-shadow: 4px 5px 0 var(--sumi);
+}
+.clip-cap b { font: 400 16px/1 var(--f-gothic); color: var(--shu); letter-spacing: 0; }
 .shot-frame .hz {
   position: absolute; left: -14px; right: 26px; bottom: -18px; height: 18px;
   background: repeating-linear-gradient(-45deg, var(--sumi) 0 14px, var(--hazard) 14px 28px);
@@ -247,7 +255,6 @@ section { position: relative; }
   display: flex; align-items: baseline; gap: 10px; padding: 9px 4px 10px; color: var(--sumi);
   font: 800 15px/1.15 var(--f-narrow); letter-spacing: .08em; text-transform: uppercase;
 }
-.sticker figcaption b { font: 400 17px/1 var(--f-gothic); color: var(--shu); letter-spacing: 0; text-transform: none; }
 .sticker::before {
   content: ""; position: absolute; top: -12px; left: 50%; width: 90px; height: 24px; translate: -50% 0;
   background: rgb(255 204 0 / .78); transform: rotate(-3deg); z-index: 1;
@@ -259,44 +266,6 @@ section { position: relative; }
 .s5 { grid-column: 9 / span 4; --r: 1.4deg; }
 .s6 { grid-column: 2 / span 6; --r: 1.2deg; }
 .s7 { grid-column: 8 / span 5; --r: -2deg; margin-top: 24px; }
-
-/* ---------- Delivery slip ---------- */
-.slip-band { background: var(--shu); }
-.slip-band.halftone { background-color: var(--shu); }
-.slip-band .head h2 { color: var(--kami); }
-.slip-band .head .kan { background: var(--sumi); }
-.slip-band .head p { color: var(--kami); }
-.slip {
-  position: relative; max-width: 980px; margin-inline: auto;
-  background: var(--kami); color: var(--sumi); padding: 30px clamp(18px, 4vw, 44px) 40px;
-  transform: rotate(-.8deg); box-shadow: 14px 16px 0 var(--sumi);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 96% 98.6%, 92% 100%, 88% 98.6%, 84% 100%, 80% 98.6%, 76% 100%, 72% 98.6%, 68% 100%, 64% 98.6%, 60% 100%, 56% 98.6%, 52% 100%, 48% 98.6%, 44% 100%, 40% 98.6%, 36% 100%, 32% 98.6%, 28% 100%, 24% 98.6%, 20% 100%, 16% 98.6%, 12% 100%, 8% 98.6%, 4% 100%, 0 98.6%);
-}
-.slip-top {
-  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px;
-  border-bottom: 3px double var(--shu); padding-bottom: 14px;
-}
-.slip-top h3 { font: 400 clamp(30px, 4vw, 44px)/1 var(--f-gothic); color: var(--shu); letter-spacing: .3em; }
-.slip-top h3 small { display: block; margin-top: 6px; font: 800 13px/1 var(--f-narrow); letter-spacing: .2em; color: var(--sumi); }
-.slip-meta { display: grid; grid-template-columns: auto auto; gap: 2px 14px; font: 600 14px/1.35 var(--f-narrow); letter-spacing: .06em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
-.slip-meta dt { color: var(--shu); }
-.slip-meta dd { margin: 0; }
-.slip-table-wrap { overflow-x: auto; }
-.slip table { width: 100%; border-collapse: collapse; margin-top: 8px; min-width: 560px; }
-.slip th {
-  text-align: left; font: 800 12px/1 var(--f-narrow); letter-spacing: .18em; color: var(--shu);
-  padding: 12px 10px 8px; border-bottom: 2px solid var(--shu);
-}
-.slip th span { font-family: var(--f-gothic); font-weight: 400; letter-spacing: .05em; margin-right: 6px; }
-.slip td { padding: 14px 10px; border-bottom: 1px solid var(--kami-line); vertical-align: top; }
-.slip td:first-child { font: 400 22px/1.05 var(--f-title); text-transform: uppercase; width: 30%; }
-.slip td:nth-child(2) { font: 700 16px/1.2 var(--f-narrow); font-variant-numeric: tabular-nums; white-space: nowrap; width: 16%; }
-.slip td:nth-child(3) { font-size: 16px; line-height: 1.45; }
-.slip td:last-child { width: 64px; text-align: center; }
-.slip td .hanko { font-size: 20px; padding: .18em; }
-.slip-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-top: 22px; }
-.slip-foot p { margin: 0; font: italic 700 18px/1.3 var(--f-narrow); letter-spacing: .04em; max-width: 46ch; }
-.slip-foot .hanko { font-size: 54px; transform: rotate(-14deg); }
 
 /* ---------- Modes as road signs ---------- */
 .signs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 34px 26px; }
@@ -311,38 +280,12 @@ section { position: relative; }
 .plate .k { font: 400 34px/1 var(--f-gothic); display: block; }
 .plate .n { display: block; margin-top: 10px; font: 400 25px/1 var(--f-title); letter-spacing: .03em; }
 .post { width: 14px; height: 30px; background: repeating-linear-gradient(var(--kami) 0 10px, var(--shu) 10px 20px); }
-.sign p { margin: 12px 0 0; font-size: 15.5px; line-height: 1.45; color: rgb(250 240 222 / .82); max-width: 30ch; }
 .m-career { --p-bg: var(--shu); --p-fg: var(--kami); --r: -2deg; }
 .m-tofu { --p-bg: var(--kami); --p-fg: var(--sumi); --r: 1.5deg; }
 .m-drift { --p-bg: var(--hazard); --p-fg: var(--sumi); --r: -1deg; }
 .m-battle { --p-bg: var(--sumi); --p-fg: var(--kami); --r: 2deg; }
 .m-speed { --p-bg: #1f6b3a; --p-fg: var(--kami); --r: -1.5deg; }
 .m-free { --p-bg: #1d3e8f; --p-fg: var(--kami); --r: 1deg; }
-
-/* ---------- Career wall calendar ---------- */
-.cal-band { background: var(--kami); color: var(--sumi); }
-.cal-band .head p { color: rgb(18 14 30 / .78); }
-.cal { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
-.week {
-  position: relative; background: #fff8ea; border: 2px solid var(--sumi); padding: 0 0 18px;
-  box-shadow: 6px 7px 0 var(--sumi);
-}
-.week:nth-child(odd) { transform: rotate(-.8deg); }
-.week:nth-child(even) { transform: rotate(.9deg); }
-.week header {
-  display: flex; justify-content: space-between; align-items: center;
-  background: var(--w, var(--shu)); color: var(--kami); padding: 10px 14px;
-  font: 800 14px/1 var(--f-narrow); letter-spacing: .18em;
-}
-.week header b { font: 400 34px/1 var(--f-kanji); letter-spacing: 0; }
-.week h3 { font: 400 32px/1 var(--f-title); text-transform: uppercase; padding: 14px 14px 4px; }
-.week p { margin: 0; padding: 0 14px; font-size: 15px; line-height: 1.45; }
-.days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; padding: 12px 14px 12px; font: 700 11px/1 var(--f-narrow); text-align: center; letter-spacing: .06em; }
-.days span { padding: 6px 0; background: rgb(18 14 30 / .07); }
-.days span.off { background: transparent; color: var(--shu); }
-.w1 { --w: #d9567a; } .w2 { --w: #1f8a5a; } .w3 { --w: #c4511c; } .w4 { --w: #3a5a8c; }
-.week .hanko { position: absolute; right: 10px; bottom: -16px; font-size: 18px; background: #fff8ea; }
-.cal-note { margin: 34px 0 0; font: italic 700 18px/1.35 var(--f-narrow); letter-spacing: .03em; max-width: 60ch; }
 
 /* ---------- Stop sign CTA ---------- */
 .stop-band { background: var(--sumi); overflow: hidden; }
@@ -353,20 +296,30 @@ section { position: relative; }
 .stop-copy h2 em { font-style: normal; color: var(--hazard); }
 .stop-copy p { margin: 18px 0 30px; max-width: 46ch; color: rgb(250 240 222 / .8); }
 
-/* ---------- Footer cassette ---------- */
-footer { background: var(--navy); border-top: 6px solid var(--shu); }
-.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-block: 34px 40px; }
-.tape {
-  display: flex; align-items: center; gap: 16px; background: none; border: 0; padding: 0; cursor: pointer;
-  color: var(--kami); text-align: left; font: inherit;
+/* ---------- Top bar: the soundtrack ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--sumi); }
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--sumi); border-bottom: 4px solid var(--shu);
 }
-.tape .np { font: italic 700 14px/1.2 var(--f-narrow); letter-spacing: .14em; color: var(--hazard); text-transform: uppercase; }
-.tape .np small { display: block; color: rgb(250 240 222 / .6); letter-spacing: .06em; font-style: normal; font-weight: 600; margin-top: 3px; }
-.cassette { width: 168px; flex: none; }
+.topbar-in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 8px; }
+.brand { font: italic 800 18px/1 var(--f-narrow); letter-spacing: .08em; color: var(--kami); text-decoration: none; }
+.tape {
+  display: flex; align-items: center; gap: 14px; background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--kami); text-align: right; font: inherit;
+}
+.tape .np { font: italic 700 15px/1.2 var(--f-narrow); letter-spacing: .14em; color: var(--hazard); text-transform: uppercase; }
+.tape .np small { display: block; color: rgb(250 240 222 / .7); letter-spacing: .08em; font-style: normal; font-weight: 600; margin-top: 3px; }
+.cassette { width: 92px; flex: none; transition: transform .2s var(--back-out); }
+.tape:hover .cassette { transform: rotate(-4deg) scale(1.06); }
 .cassette .reel { transform-box: fill-box; transform-origin: center; }
 .tape.playing .reel { animation: spin 1.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.foot-meta { font: 600 14px/1.5 var(--f-narrow); letter-spacing: .1em; text-transform: uppercase; color: rgb(250 240 222 / .62); text-align: right; }
+
+/* ---------- Footer ---------- */
+footer { background: var(--navy); border-top: 6px solid var(--shu); }
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-block: 34px 40px; }
+.foot-meta { font: 600 14px/1.5 var(--f-narrow); letter-spacing: .1em; text-transform: uppercase; color: rgb(250 240 222 / .62); }
 .foot-meta b { color: var(--kami); font-weight: 800; }
 
 /* ---------- Responsive ---------- */
@@ -374,11 +327,11 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
   .hero-grid { grid-template-columns: minmax(0, 1fr); padding-block: 40px 56px; }
   .slab { margin-left: calc(-1 * var(--gut-l)); padding-left: calc(var(--gut-l) + 14px); margin-right: 6%; }
   .shot-frame { margin-right: 0; }
+  .clip-cap { right: auto; left: 34px; }
   .noren { top: auto; bottom: 30%; right: 8px; transform: scale(.7); transform-origin: top right; }
   .stickers { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .stickers .sticker { grid-column: auto / span 1; margin-top: 0; }
   .stickers .s1, .stickers .s6 { grid-column: 1 / -1; }
-  .cal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stop-grid { grid-template-columns: minmax(0, 1fr); justify-items: start; }
 }
 @media (max-width: 560px) {
@@ -386,9 +339,10 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
   .band { padding-block: 72px; }
   .slab { padding-top: 26px; padding-right: 26px; clip-path: polygon(0 0, 100% 0, 96% 30%, 100% 60%, 94% 100%, 0 100%); }
   .stickers { grid-template-columns: minmax(0, 1fr); gap: 30px; }
-  .cal { grid-template-columns: minmax(0, 1fr); }
+  .brand { font-size: 15px; }
+  .tape .np small { display: none; }
+  .cassette { width: 72px; }
   .noren { display: none; }
-  .foot-meta { text-align: left; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -406,6 +360,25 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
   </filter>
   <symbol id="steam" viewBox="0 0 24 24"><path fill="currentColor" d="M11.98 0C5.67 0 .5 4.86.02 11.04l6.43 2.66a3.37 3.37 0 0 1 1.9-.59l2.87-4.15v-.06a4.54 4.54 0 1 1 4.54 4.54h-.1l-4.09 2.92.01.16a3.4 3.4 0 0 1-6.75.6L.25 15.1A12 12 0 1 0 11.98 0Zm-4.45 18.2-1.47-.6a2.56 2.56 0 0 0 4.7-.13 2.54 2.54 0 0 0-1.4-3.36 2.55 2.55 0 0 0-1.86-.03l1.52.63a1.88 1.88 0 1 1-1.45 3.48Zm11.4-9.26a3.03 3.03 0 1 0-3.03 3.02 3.03 3.03 0 0 0 3.03-3.02Zm-5.3 0a2.27 2.27 0 1 1 2.27 2.27 2.27 2.27 0 0 1-2.27-2.27Z"/></symbol>
 </svg>
+
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#top">WHERE'S MY TOFU!?</a>
+    <button class="tape" id="tape" type="button" aria-pressed="false">
+      <span class="np" id="np">▶ Play the soundtrack<small>4FX · Tsuyu Drive</small></span>
+      <svg class="cassette" viewBox="0 0 168 104" aria-hidden="true">
+        <rect x="2" y="2" width="164" height="100" rx="8" fill="#faf0de" stroke="#120e1e" stroke-width="3"/>
+        <rect x="12" y="10" width="144" height="16" fill="#de342c"/>
+        <text x="20" y="22" fill="#faf0de" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="800" font-size="11" letter-spacing="1.5">A · 4FX · TSUYU DRIVE</text>
+        <rect x="34" y="40" width="100" height="34" rx="17" fill="#120e1e"/>
+        <g class="reel"><circle cx="52" cy="57" r="13" fill="#faf0de"/><path d="M52 46v6M52 62v6M41 57h6M57 57h6" stroke="#120e1e" stroke-width="3"/></g>
+        <g class="reel"><circle cx="116" cy="57" r="13" fill="#faf0de"/><path d="M116 46v6M116 62v6M105 57h6M121 57h6" stroke="#120e1e" stroke-width="3"/></g>
+        <path d="M30 102l10-18h88l10 18" fill="#e9dcc4" stroke="#120e1e" stroke-width="3"/>
+      </svg>
+    </button>
+    <audio id="music" src="music/tsuyu-drive.ogg" loop preload="none"></audio>
+  </div>
+</div>
 
 <header class="hero shake" id="top">
   <canvas id="speed" aria-hidden="true"></canvas>
@@ -428,7 +401,8 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
       </div>
     </div>
     <div class="shot-frame">
-      <div class="cut"><img src="shots/hero.jpg" alt="A white AE86 on a cliff road above the sea at golden hour, autumn trees in orange and red, cel-shaded."></div>
+      <div class="cut"><video id="hero-video" src="video/rain.mp4" poster="video/rain.jpg" autoplay muted loop playsinline preload="auto" aria-label="From the driver's seat in pouring rain: rain lit up by the headlights at night, streaking across the windscreen and the side window."></video></div>
+      <span class="clip-cap" aria-hidden="true"><b>雨夜</b>Night, pouring rain</span>
       <span class="tag" aria-hidden="true">出発</span>
       <span class="hz" aria-hidden="true"></span>
     </div>
@@ -449,50 +423,13 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
       <p>Every pass is generated from a seed: hairpins, tunnels, rail crossings, sakura and rock sheds. Then the weather and the hour change how it drives.</p>
     </div>
     <div class="stickers">
-      <figure class="sticker s1"><img src="shots/s1.jpg" alt="The AE86 sliding through a night corner on the pass, headlights on the guard rail, a 1,166 point combo on the HUD." loading="lazy"><figcaption><b>峠</b>Night drift, ×3.5 combo</figcaption></figure>
-      <figure class="sticker s2"><img src="shots/s2.jpg" alt="The AE86 drifting on a wet road at blue hour, rain streaks and spray, NICE DRIFT on the HUD." loading="lazy"><figcaption><b>雨</b>Rain at blue hour</figcaption></figure>
-      <figure class="sticker s3"><img src="shots/s3.jpg" alt="The AE86 with a tofu crate on the roof parked outside the shop, under a cherry tree." loading="lazy"><figcaption><b>店</b>Outside the shop</figcaption></figure>
-      <figure class="sticker s4"><img src="shots/s4.jpg" alt="Cockpit view at midday: the driver's hands on the wheel, gauges and the pass ahead." loading="lazy"><figcaption><b>席</b>From the driver's seat</figcaption></figure>
-      <figure class="sticker s5"><img src="shots/s5.jpg" alt="Three cars parked at the lookout above the city lights at dusk." loading="lazy"><figcaption><b>仲間</b>The crew at the lookout</figcaption></figure>
-      <figure class="sticker s6"><img src="shots/s6.jpg" alt="The AE86 drifting at 43 degrees through deep snow at dusk, headlights on the snow." loading="lazy"><figcaption><b>雪</b>Winter, deep snow</figcaption></figure>
-      <figure class="sticker s7"><img src="shots/s7.jpg" alt="The cliff road at midday, autumn trees, a curve mirror and the sea beyond." loading="lazy"><figcaption><b>崖</b>The cliffs, autumn</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<section class="band slip-band halftone" aria-labelledby="h-slip">
-  <div class="wrap">
-    <div class="head">
-      <h2 id="h-slip">Tonight's order</h2><span class="kan">伝票</span>
-      <p>What goes in the car before you leave the shop.</p>
-    </div>
-    <div class="slip">
-      <div class="slip-top">
-        <h3>納品書<small>DELIVERY SLIP · 1998</small></h3>
-        <dl class="slip-meta">
-          <dt>No.</dt><dd>0086</dd>
-          <dt>Car</dt><dd>AE86 · Yaris · Kei truck</dd>
-          <dt>Leave</dt><dd>04:30, before dawn</dd>
-        </dl>
-      </div>
-      <div class="slip-table-wrap">
-        <table>
-          <thead><tr><th><span>品名</span>Item</th><th><span>数量</span>Qty</th><th><span>備考</span>Notes</th><th><span>印</span></th></tr></thead>
-          <tbody>
-            <tr><td>Tofu</td><td>1 crate</td><td>Strapped to the roof rack. Hit a wall hard enough and it shows.</td><td><span class="hanko round">済</span></td></tr>
-            <tr><td>Glass of water</td><td>Full, on the dash</td><td>Every slosh counts. Drive smooth, or drift smoother. Spill it and the run is ruined.</td><td><span class="hanko round">済</span></td></tr>
-            <tr><td>Drift combo</td><td>× multiplier</td><td>Chain slides to climb the multiplier. Bank it before the grace stripe drains.</td><td><span class="hanko round">済</span></td></tr>
-            <tr><td>The road</td><td>Any seed</td><td>Mountain pass, cliffs over the sea, the expressway, the training lot.</td><td><span class="hanko round">済</span></td></tr>
-            <tr><td>Weather</td><td>4 seasons</td><td>Sakura, summer heat, autumn leaves and rain, winter snow. Fog and mist on the cliffs.</td><td><span class="hanko round">済</span></td></tr>
-            <tr><td>Crew</td><td>Your friends</td><td>Online, everyone on the same job, the same road, at the same time.</td><td><span class="hanko round">済</span></td></tr>
-            <tr><td>Cassettes</td><td>Side A</td><td>Eurodance in the tape deck. The driver's hand swaps tapes while you drive.</td><td><span class="hanko round">済</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="slip-foot">
-        <p>Payment on delivery. The shop's loan is due every week, and the bank doesn't care about your lap time.</p>
-        <span class="hanko round" aria-label="Delivered">配達済</span>
-      </div>
+      <figure class="sticker s1"><img src="shots/s1.jpg" alt="The AE86 sliding through a night corner on the pass, headlights on the guard rail, a 1,166 point combo on the HUD." loading="lazy"><figcaption>Night, Mountain pass</figcaption></figure>
+      <figure class="sticker s2"><img src="shots/s2.jpg" alt="The AE86 drifting on a wet road at blue hour, rain streaks and spray, NICE DRIFT on the HUD." loading="lazy"><figcaption>Blue hour, Mountain pass</figcaption></figure>
+      <figure class="sticker s3"><img src="shots/s3.jpg" alt="The AE86 with a tofu crate on the roof parked outside the shop, under a cherry tree." loading="lazy"><figcaption>Golden hour, Tofu shop</figcaption></figure>
+      <figure class="sticker s4"><img src="shots/s4.jpg" alt="Cockpit view at midday: the driver's hands on the wheel, gauges and the pass ahead." loading="lazy"><figcaption>Midday, Mountain pass</figcaption></figure>
+      <figure class="sticker s5"><img src="shots/s5.jpg" alt="Three cars parked at the lookout above the city lights at dusk." loading="lazy"><figcaption>Golden hour, The lookout</figcaption></figure>
+      <figure class="sticker s6"><img src="shots/s6.jpg" alt="The AE86 drifting at 43 degrees through deep snow at dusk, headlights on the snow." loading="lazy"><figcaption>Blue hour, Mountain pass</figcaption></figure>
+      <figure class="sticker s7"><img src="shots/s7.jpg" alt="The cliff road at midday, autumn trees, a curve mirror and the sea beyond." loading="lazy"><figcaption>Midday, Cliffs</figcaption></figure>
     </div>
   </div>
 </section>
@@ -501,32 +438,15 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
   <div class="wrap">
     <div class="head">
       <h2 id="h-modes">Pick a run</h2><span class="kan">出発準備</span>
-      <p>Seven ways down the mountain, solo or with the crew.</p>
     </div>
     <div class="signs">
-      <div class="sign m-career"><div class="plate"><span class="k">豆腐店</span><span class="n">CAREER</span></div><div class="post"></div><p>Run the family tofu shop. Pay the debt every Sunday or it closes.</p></div>
-      <div class="sign m-tofu"><div class="plate"><span class="k">配達</span><span class="n">TOFU DELIVERY</span></div><div class="post"></div><p>One lap, a glass of water on board. Spill it and the tofu's ruined.</p></div>
-      <div class="sign m-drift"><div class="plate"><span class="k">ドリフト</span><span class="n">DRIFT ATTACK</span></div><div class="post"></div><p>One timed lap. Bank as many drift points as you can.</p></div>
-      <div class="sign m-battle"><div class="plate"><span class="k">峠バトル</span><span class="n">TOUGE BATTLE</span></div><div class="post"></div><p>You against a rival AE86 down the pass. Lead, chase, or race your friends.</p></div>
-      <div class="sign m-speed"><div class="plate"><span class="k">高速</span><span class="n">SPEED ATTACK</span></div><div class="post"></div><p>The highway flat out. Points over the speed line and for close passes.</p></div>
-      <div class="sign m-free"><div class="plate"><span class="k">自由</span><span class="n">FREE ROAM</span></div><div class="post"></div><p>Cruise the pass and chain drifts. No clock, no pressure.</p></div>
+      <div class="sign m-career"><div class="plate"><span class="k">豆腐店</span><span class="n">CAREER</span></div><div class="post"></div></div>
+      <div class="sign m-tofu"><div class="plate"><span class="k">配達</span><span class="n">TOFU DELIVERY</span></div><div class="post"></div></div>
+      <div class="sign m-drift"><div class="plate"><span class="k">ドリフト</span><span class="n">DRIFT ATTACK</span></div><div class="post"></div></div>
+      <div class="sign m-battle"><div class="plate"><span class="k">峠バトル</span><span class="n">TOUGE BATTLE</span></div><div class="post"></div></div>
+      <div class="sign m-speed"><div class="plate"><span class="k">高速</span><span class="n">SPEED ATTACK</span></div><div class="post"></div></div>
+      <div class="sign m-free"><div class="plate"><span class="k">自由</span><span class="n">FREE ROAM</span></div><div class="post"></div></div>
     </div>
-  </div>
-</section>
-
-<section class="band cal-band" aria-labelledby="h-cal">
-  <div class="wrap">
-    <div class="head">
-      <h2 id="h-cal">Four weeks to save the shop</h2><span class="kan">返済</span>
-      <p>A career is one loan paid over four weeks, one season a week. Monday to Friday, four slots a day: morning, midday, evening, night.</p>
-    </div>
-    <div class="cal">
-      <article class="week w1"><header>WEEK 1<b>春</b></header><h3>Spring</h3><div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span class="off">S</span><span class="off">S</span></div><p>The first pass roads open. Basic deliveries and your first rival.</p><span class="hanko">返済</span></article>
-      <article class="week w2"><header>WEEK 2<b>夏</b></header><h3>Summer</h3><div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span class="off">S</span><span class="off">S</span></div><p>The highway opens. Supply runs, toll jobs, and engines that cook on the climbs.</p><span class="hanko">返済</span></article>
-      <article class="week w3"><header>WEEK 3<b>秋</b></header><h3>Autumn</h3><div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span class="off">S</span><span class="off">S</span></div><p>The cliffs open. Earthquake jobs, falling leaves and rain.</p><span class="hanko">返済</span></article>
-      <article class="week w4"><header>WEEK 4<b>冬</b></header><h3>Winter</h3><div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span class="off">S</span><span class="off">S</span></div><p>Every road, and snow that gets deeper by Thursday. Fit the snow tyres.</p><span class="hanko">完済</span></article>
-    </div>
-    <p class="cal-note">Miss one payment and the shop closes. Pay it all and the noren stays up.</p>
   </div>
 </section>
 
@@ -551,19 +471,6 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
 
 <footer>
   <div class="wrap foot">
-    <button class="tape" id="tape" type="button" aria-pressed="false">
-      <svg class="cassette" viewBox="0 0 168 104" aria-hidden="true">
-        <rect x="2" y="2" width="164" height="100" rx="8" fill="#faf0de" stroke="#120e1e" stroke-width="3"/>
-        <rect x="12" y="10" width="144" height="16" fill="#de342c"/>
-        <text x="20" y="22" fill="#faf0de" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="800" font-size="11" letter-spacing="1.5">A · EURODANCE MENU MIX</text>
-        <rect x="34" y="40" width="100" height="34" rx="17" fill="#120e1e"/>
-        <g class="reel"><circle cx="52" cy="57" r="13" fill="#faf0de"/><path d="M52 46v6M52 62v6M41 57h6M57 57h6" stroke="#120e1e" stroke-width="3"/></g>
-        <g class="reel"><circle cx="116" cy="57" r="13" fill="#faf0de"/><path d="M116 46v6M116 62v6M105 57h6M121 57h6" stroke="#120e1e" stroke-width="3"/></g>
-        <path d="M30 102l10-18h88l10 18" fill="#e9dcc4" stroke="#120e1e" stroke-width="3"/>
-      </svg>
-      <span class="np" id="np">▶ Press play<small>The menu theme, from the game</small></span>
-    </button>
-    <audio id="music" src="music/eurodance-menu.ogg" loop preload="none"></audio>
     <div class="foot-meta"><b>Where's My Tofu!?</b><br>Coming soon to Steam · PC</div>
   </div>
 </footer>
@@ -595,19 +502,26 @@ document.querySelectorAll("[data-steam]").forEach(a => a.href = STEAM_URL);
   }, 1000 / 12);
 })();
 
-// The cassette plays the menu theme.
+// The cassette in the top bar plays the soundtrack.
 (() => {
   const btn = document.getElementById("tape"), au = document.getElementById("music"), np = document.getElementById("np");
   btn.addEventListener("click", async () => {
     if (au.paused) {
       try { au.volume = .6; await au.play(); btn.classList.add("playing"); btn.setAttribute("aria-pressed", "true");
-        np.innerHTML = "Now playing…<small>Eurodance menu mix · tap to stop</small>"; }
+        np.innerHTML = "Now playing…<small>4FX · Tsuyu Drive · tap to stop</small>"; }
       catch { np.innerHTML = "Tape jammed<small>This browser can't play the track</small>"; }
     } else {
       au.pause(); btn.classList.remove("playing"); btn.setAttribute("aria-pressed", "false");
-      np.innerHTML = "▶ Press play<small>The menu theme, from the game</small>";
+      np.innerHTML = "▶ Play the soundtrack<small>4FX · Tsuyu Drive</small>";
     }
   });
+})();
+
+
+// Reduced motion: keep the hero video on its poster frame.
+(() => {
+  const v = document.getElementById("hero-video");
+  if (v && matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
 })();
 </script>
 </body>
