@@ -16,8 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,600;0,800;1,700;1,800&family=Barlow:wght@500;600&family=Dela+Gothic+One&family=Shippori+Mincho+B1:wght@800&display=swap">
 <style>
-/* Layout: one downhill run. Tilted red/ink slabs over the live world, screenshots taped on,
-   road signs for the modes, a wall calendar for the career, a stop sign to wishlist.
+/* Layout: one downhill run. Tilted red/ink slabs over the live world, the water glass, paper slips
+   and road signs for the career and modes, a few screenshots taped on, a stop sign to wishlist.
    Palette and type are the game's own HANKO RUSH system (docs/ui_proposal.md). */
 :root {
   --sumi: #120e1e;      /* SUMI ink: outlines, slabs, text on paper */
@@ -231,25 +231,48 @@ section { position: relative; }
 }
 .sticker:hover { transform: rotate(0) scale(1.03); z-index: 2; }
 .sticker img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-.sticker figcaption {
-  display: flex; align-items: baseline; gap: 10px; padding: 9px 4px 10px; color: var(--sumi);
-  font: 800 15px/1.15 var(--f-narrow); letter-spacing: .08em; text-transform: uppercase;
-}
+.sticker figcaption { padding: 9px 4px 11px; color: var(--sumi); font: 500 15px/1.35 var(--f-body); }
+.sticker figcaption b { font: 800 15px/1 var(--f-narrow); letter-spacing: .08em; text-transform: uppercase; color: var(--shu); }
 .sticker::before {
   content: ""; position: absolute; top: -12px; left: 50%; width: 90px; height: 24px; translate: -50% 0;
   background: rgb(255 204 0 / .78); transform: rotate(-3deg); z-index: 1;
 }
 .s1 { grid-column: 1 / span 7; --r: -1.6deg; }
 .s2 { grid-column: 8 / span 5; --r: 2.4deg; margin-top: 46px; }
-.s3 { grid-column: 1 / span 4; --r: 2deg; }
-.s4 { grid-column: 5 / span 4; --r: -2.6deg; margin-top: 30px; }
-.s5 { grid-column: 9 / span 4; --r: 1.4deg; }
-.s6 { grid-column: 2 / span 6; --r: 1.2deg; }
-.s7 { grid-column: 8 / span 5; --r: -2deg; margin-top: 24px; }
+.s6 { grid-column: 1 / span 5; --r: 1.2deg; margin-top: 20px; }
+.s7 { grid-column: 6 / span 7; --r: -2deg; }
+
+/* ---------- The glass of water ---------- */
+.water { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 40px clamp(40px, 5vw, 72px); align-items: center; }
+.water .sticker { --r: -1.8deg; }
+.beats { list-style: none; margin: 0; padding: 0; display: grid; gap: 26px; }
+.beats h3 { font: 400 clamp(26px, 2.6vw, 34px)/1 var(--f-title); text-transform: uppercase; transform: skewX(-8deg); transform-origin: left bottom; }
+.beats h3 i { font-style: normal; color: var(--hazard); }
+.beats p { margin: 8px 0 0; max-width: 44ch; color: rgb(250 240 222 / .8); }
+
+/* ---------- The career: paper slips ---------- */
+.slips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-bottom: 72px; }
+.slip {
+  position: relative; background: var(--kami); color: var(--sumi); padding: 30px 26px 26px;
+  box-shadow: 9px 10px 0 #000; transform: rotate(var(--r, 0deg));
+}
+.slip:nth-child(1) { --r: -1.4deg; }
+.slip:nth-child(2) { --r: 1deg; margin-top: 18px; }
+.slip:nth-child(3) { --r: -.6deg; }
+/* The hanko: a red stamp in the corner, the slip's title in kanji. */
+.slip .stamp {
+  position: absolute; top: -16px; right: 18px; display: grid; place-items: center; width: 54px; height: 54px;
+  border: 3px solid var(--shu); border-radius: 8px; background: var(--kami); color: var(--shu);
+  font: 400 20px/1 var(--f-gothic); transform: rotate(8deg);
+}
+.slip h3 { font: 400 clamp(26px, 2.4vw, 32px)/1 var(--f-title); text-transform: uppercase; transform: skewX(-8deg); transform-origin: left bottom; padding-right: 48px; }
+.slip p { margin: 12px 0 0; }
 
 /* ---------- Modes as road signs ---------- */
-.signs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 34px 26px; }
-.sign { display: grid; grid-template-rows: auto 1fr; gap: 0; justify-items: center; text-align: center; }
+.signs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 34px 26px; }
+.sign { display: grid; grid-template-rows: auto auto 1fr; gap: 0; justify-items: center; text-align: center; }
+.sign p { margin: 14px 0 0; max-width: 30ch; color: rgb(250 240 222 / .8); }
+.signs-more { margin: 30px 0 0; text-align: center; font: italic 600 18px/1.3 var(--f-narrow); letter-spacing: .04em; color: rgb(250 240 222 / .7); }
 .plate {
   width: 100%; position: relative; padding: 20px 16px 18px; border-radius: 10px;
   background: var(--p-bg, var(--hazard)); color: var(--p-fg, var(--sumi));
@@ -261,16 +284,14 @@ section { position: relative; }
 .plate .n { display: block; margin-top: 10px; font: 400 25px/1 var(--f-title); letter-spacing: .03em; }
 .post { width: 14px; height: 30px; background: repeating-linear-gradient(var(--kami) 0 10px, var(--shu) 10px 20px); }
 .m-career { --p-bg: var(--shu); --p-fg: var(--kami); --r: -2deg; }
-.m-tofu { --p-bg: var(--kami); --p-fg: var(--sumi); --r: 1.5deg; }
+.m-battle { --p-bg: var(--kami); --p-fg: var(--sumi); --r: 2deg; }
 .m-drift { --p-bg: var(--hazard); --p-fg: var(--sumi); --r: -1deg; }
-.m-battle { --p-bg: var(--sumi); --p-fg: var(--kami); --r: 2deg; }
 .m-speed { --p-bg: #1f6b3a; --p-fg: var(--kami); --r: -1.5deg; }
-.m-free { --p-bg: #1d3e8f; --p-fg: var(--kami); --r: 1deg; }
 
 /* ---------- Stop sign CTA ---------- */
 .stop-band { background: var(--sumi); overflow: hidden; }
 .stop-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 40px 64px; align-items: center; }
-.stopsign { width: clamp(220px, 28vw, 340px); transform-origin: 50% 0; animation: swing 3.6s ease-in-out infinite; }
+.stopsign { width: clamp(220px, 28vw, 340px); transform-origin: 50% 100%;  /* the foot of the pole */ animation: swing 3.6s ease-in-out infinite; }
 @keyframes swing { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(4deg); } }
 .stop-copy h2 { font: 400 clamp(52px, 8vw, 112px)/.9 var(--f-title); text-transform: uppercase; transform: skewX(-8deg); }
 .stop-copy h2 em { font-style: normal; color: var(--hazard); }
@@ -353,7 +374,11 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
   .noren svg { width: 24px; height: 24px; }
   .stickers { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .stickers .sticker { grid-column: auto / span 1; margin-top: 0; }
-  .stickers .s1, .stickers .s6 { grid-column: 1 / -1; }
+  .stickers .s1, .stickers .s7 { grid-column: 1 / -1; }
+  .water { grid-template-columns: minmax(0, 1fr); }
+  .signs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .slips { grid-template-columns: minmax(0, 1fr); gap: 40px; max-width: 560px; }
+  .slip:nth-child(2) { margin-top: 0; }
   .stop-grid { grid-template-columns: minmax(0, 1fr); justify-items: start; }
 }
 @media (max-width: 560px) {
@@ -361,6 +386,7 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
   .band { padding-block: 72px; }
   .slab { padding-top: 26px; padding-inline: 8%; clip-path: polygon(0 0, 100% 0, 96% 30%, 100% 60%, 94% 100%, 6% 100%, 0 60%, 4% 30%); }
   .stickers { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .signs { grid-template-columns: minmax(0, 1fr); max-width: 320px; margin-inline: auto; }
   .brand { font-size: 15px; }
   /* Phones: just the cassette in the corner; the label stays for screen readers. */
   .tape .np { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -448,36 +474,53 @@ footer { background: var(--navy); border-top: 6px solid var(--shu); }
   </div>
 </div>
 
-<section class="band" aria-labelledby="h-road">
+<section class="band" aria-labelledby="h-water">
   <div class="wrap">
     <div class="head">
-      <h2 id="h-road">On the road</h2><span class="kan">峠道</span>
-      <p>Every pass is generated from a seed: hairpins, tunnels, rail crossings, sakura and rock sheds. Then the weather and the hour change how it drives.</p>
+      <h2 id="h-water">Don't spill the water</h2><span class="kan">水</span>
+      <p>There's a glass of water riding along with the tofu. Get it down the mountain still full and the customer will never know how you drove.</p>
     </div>
-    <div class="stickers">
-      <figure class="sticker s1"><img src="shots/s1.jpg" alt="The AE86 sliding through a night corner on the pass, headlights on the guard rail, a 1,166 point combo on the HUD." loading="lazy"><figcaption>Night, Mountain pass</figcaption></figure>
-      <figure class="sticker s2"><img src="shots/s2.jpg" alt="The AE86 drifting on a wet road at blue hour, rain streaks and spray, NICE DRIFT on the HUD." loading="lazy"><figcaption>Blue hour, Mountain pass</figcaption></figure>
-      <figure class="sticker s3"><img src="shots/s3.jpg" alt="The AE86 with a tofu crate on the roof parked outside the shop, under a cherry tree." loading="lazy"><figcaption>Golden hour, Tofu shop</figcaption></figure>
-      <figure class="sticker s4"><img src="shots/s4.jpg" alt="Cockpit view at midday: the driver's hands on the wheel, gauges and the pass ahead." loading="lazy"><figcaption>Midday, Mountain pass</figcaption></figure>
-      <figure class="sticker s5"><img src="shots/s5.jpg" alt="Three cars parked at the lookout above the city lights at dusk." loading="lazy"><figcaption>Golden hour, The lookout</figcaption></figure>
-      <figure class="sticker s6"><img src="shots/s6.jpg" alt="The AE86 drifting at 43 degrees through deep snow at dusk, headlights on the snow." loading="lazy"><figcaption>Blue hour, Mountain pass</figcaption></figure>
-      <figure class="sticker s7"><img src="shots/s7.jpg" alt="The cliff road at midday, autumn trees, a curve mirror and the sea beyond." loading="lazy"><figcaption>Midday, Cliffs</figcaption></figure>
+    <div class="water">
+      <figure class="sticker"><img src="shots/s4.jpg" alt="Cockpit view at midday: the driver's hands on the wheel, gauges and the pass ahead." loading="lazy"><figcaption><b>Cockpit</b></figcaption></figure>
+      <ul class="beats">
+        <li><h3>Smooth is <i>fast</i></h3><p>Clean lines and tidy drifts keep the water in. Yes, you can drift. Just do it nicely.</p></li>
+        <li><h3>Mistakes will <i>cost you</i></h3><p>Snap the wheel, stab the brakes, see-saw out of a slide... and there goes the water. The tofu won't be far behind.</p></li>
+      </ul>
     </div>
   </div>
 </section>
 
-<section class="band" aria-labelledby="h-modes">
+<section class="band" aria-labelledby="h-career">
   <div class="wrap">
     <div class="head">
-      <h2 id="h-modes">Pick a run</h2><span class="kan">出発準備</span>
+      <h2 id="h-career">Keep it afloat</h2><span class="kan">借金</span>
+    </div>
+    <div class="slips">
+      <div class="slip"><span class="stamp" aria-hidden="true">店</span><h3>The shop</h3><p>Tofu shop upkeep isn't cheap - you and your coworkers better make sure the whole business stays afloat.</p></div>
+      <div class="slip"><span class="stamp" aria-hidden="true">部品</span><h3>The car</h3><p>Every job pays out in parts. Shorter gears, stiffer springs, a proper diff... each one helps somewhere and costs you somewhere else. Build the car for the roads ahead - or just for how you like to drive.</p></div>
+      <div class="slip"><span class="stamp" aria-hidden="true">再</span><h3>Again</h3><p>Lost the shop? Happens. Your parts stay behind, but new cars, liveries and tapes come with you. And once you've kept it afloat, try again with the heat turned up.</p></div>
     </div>
     <div class="signs">
-      <div class="sign m-career"><div class="plate"><span class="k">豆腐店</span><span class="n">CAREER</span></div><div class="post"></div></div>
-      <div class="sign m-tofu"><div class="plate"><span class="k">配達</span><span class="n">TOFU DELIVERY</span></div><div class="post"></div></div>
-      <div class="sign m-drift"><div class="plate"><span class="k">ドリフト</span><span class="n">DRIFT ATTACK</span></div><div class="post"></div></div>
-      <div class="sign m-battle"><div class="plate"><span class="k">峠バトル</span><span class="n">TOUGE BATTLE</span></div><div class="post"></div></div>
-      <div class="sign m-speed"><div class="plate"><span class="k">高速</span><span class="n">SPEED ATTACK</span></div><div class="post"></div></div>
-      <div class="sign m-free"><div class="plate"><span class="k">自由</span><span class="n">FREE ROAM</span></div><div class="post"></div></div>
+      <div class="sign m-career"><div class="plate"><span class="k">豆腐店</span><span class="n">CAREER</span></div><div class="post"></div><p>The shop, the loan and four weeks to pay it off.</p></div>
+      <div class="sign m-battle"><div class="plate"><span class="k">峠バトル</span><span class="n">TOUGE BATTLE</span></div><div class="post"></div><p>Someone's waiting at the top of the pass. Don't keep them waiting.</p></div>
+      <div class="sign m-drift"><div class="plate"><span class="k">ドリフト</span><span class="n">DRIFT ATTACK</span></div><div class="post"></div><p>Forget the tofu for once. Go sideways, chain it and chase the score.</p></div>
+      <div class="sign m-speed"><div class="plate"><span class="k">高速</span><span class="n">SPEED ATTACK</span></div><div class="post"></div><p>Toll to toll on the highway. Traffic won't move for you.</p></div>
+    </div>
+    <p class="signs-more">...plus free roam and one-off deliveries.</p>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="h-road">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="h-road">Never the same run</h2><span class="kan">峠道</span>
+      <p>Hairpins, tunnels, rail crossings - every pass is a little different. Then the weather rolls in and changes how it drives.</p>
+    </div>
+    <div class="stickers">
+      <figure class="sticker s1"><img src="shots/s1.jpg" alt="The AE86 sliding through a night corner on the pass, headlights on the guard rail, a 1,166 point combo on the HUD." loading="lazy"><figcaption><b>Night</b></figcaption></figure>
+      <figure class="sticker s2"><img src="shots/s2.jpg" alt="The AE86 drifting on a wet road at blue hour, rain streaks and spray, NICE DRIFT on the HUD." loading="lazy"><figcaption><b>Rain</b></figcaption></figure>
+      <figure class="sticker s6"><img src="shots/s6.jpg" alt="The AE86 drifting at 43 degrees through deep snow at dusk, headlights on the snow." loading="lazy"><figcaption><b>Snow</b></figcaption></figure>
+      <figure class="sticker s7"><img src="shots/s7.jpg" alt="The cliff road at midday, autumn trees, a curve mirror and the sea beyond." loading="lazy"><figcaption><b>Autumn</b></figcaption></figure>
     </div>
   </div>
 </section>
